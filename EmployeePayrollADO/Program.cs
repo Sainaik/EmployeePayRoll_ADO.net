@@ -21,8 +21,9 @@ namespace EmployeePayrollADO
             employee.NetSalary = 273234.23;
             employee.StartDate = Convert.ToDateTime("2020-10-13");
 
-            employeeRepo.addEmployee(employee);
-            employeeRepo.getAllEmployee();
+            //employeeRepo.addEmployee(employee);
+            //employeeRepo.getAllEmployee();
+            employeeRepo.UpdateEmployeeSalary(1000000, 100000, 200000, 700000, "sai");
         }
     }
 }

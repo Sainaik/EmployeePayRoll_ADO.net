@@ -19,13 +19,13 @@ namespace EmployeePayrollADO
                 using (this.connection)
                 {
                     //string query = @"SELECT id,name,start,Gender,phoneNumber,address,department,
-                                    //basic_pay,deductions,income_tax,net_salary,
-                                    //FROM employee_payroll";
+                    //basic_pay,deductions,income_tax,net_salary,
+                    //FROM employee_payroll";
 
-                   string query = @"select * from employee_payroll";
+                    string query = @"select * from employee_payroll";
 
 
-                   SqlCommand cmd = new SqlCommand(query, this.connection);
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
 
                     this.connection.Open();
 
@@ -43,10 +43,10 @@ namespace EmployeePayrollADO
                             employee.Address = dr.GetString(5);
                             employee.Department = dr.GetString(6);
                             employee.BasicPay = Convert.ToDouble(dr.GetDecimal(7));
-                            employee.Deductions = Convert.ToDouble(dr.GetDecimal(8));                         
+                            employee.Deductions = Convert.ToDouble(dr.GetDecimal(8));
                             employee.IncomeTax = Convert.ToDouble(dr.GetDecimal(9));
                             employee.NetSalary = Convert.ToDouble(dr.GetDecimal(10));
-                           
+
 
                             Console.WriteLine($" {employee.EmployeeID}, {employee.EmployeeName}, {employee.Address}, {employee.Department}, {employee.BasicPay}");
                             Console.WriteLine("\n");
@@ -108,6 +108,48 @@ namespace EmployeePayrollADO
             {
                 this.connection.Close();
             }
+
+
         }
+
+
+        public void UpdateEmployeeSalary(double basicPay, double deduction, double tax, double netSalary, string name)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    string query = $"update  employee_payroll set  basic_pay = '{basicPay}', deductions = '{deduction}', income_tax ='{tax}',  net_salary ='{netSalary}'  where name = '{name}'";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    this.connection.Close();
+                    if (result != 0)
+                    {
+                        Console.WriteLine("Update successfull");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Update unsuccessfull");
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+
     }
+
+
+
+    
 }
